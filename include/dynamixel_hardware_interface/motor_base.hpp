@@ -229,6 +229,9 @@ protected:
   virtual double valueToTemperature(uint8_t value) const;
   virtual double valueToTemperature(uint16_t value) const;
   virtual double valueToTemperature(uint32_t value) const;
+  virtual void radianToMinPosition(double radian, uint8_t & value) const;
+  virtual void radianToMinPosition(double radian, uint16_t & value) const;
+  virtual void radianToMinPosition(double radian, uint32_t & value) const;
   std::shared_ptr<AddressTableBase> address_table_;
   std::shared_ptr<dynamixel::PortHandler> port_handler_;
   std::shared_ptr<dynamixel::PacketHandler> packet_handler_;

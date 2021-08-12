@@ -105,6 +105,10 @@ public:
         return ADDR_PRESENT_VOLTAGE;
       case Operation::PRESENT_TEMPERATURE:
         return ADDR_PRESENT_TEMPERATURE;
+      case Operation::MIN_POSITION_LIMIT:
+        return ADDR_MIN_POSITION_LIMIT;
+      case Operation::MAX_POSITION_LIMIT:
+        return ADDR_MAX_POSITION_LIMIT;
       default:
         return Address();
     }
@@ -127,6 +131,8 @@ private:
   const Address ADDR_PRESENT_LOAD;
   const Address ADDR_PRESENT_VOLTAGE;
   const Address ADDR_PRESENT_TEMPERATURE;
+  const Address ADDR_MIN_POSITION_LIMIT;
+  const Address ADDR_MAX_POSITION_LIMIT;
 };
 }  // namespace dynamixel_hardware_interface
 

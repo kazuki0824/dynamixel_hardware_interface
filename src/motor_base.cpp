@@ -119,6 +119,21 @@ double MotorBase::valueToTemperature(uint32_t) const
   throw std::runtime_error("value to temperature function should be implemented for each motor");
 }
 
+void MotorBase::radianToMinPosition(double, uint8_t &) const
+{
+  throw std::runtime_error("radian to min position function should be implemented for each motor");
+}
+
+void MotorBase::radianToMinPosition(double, uint16_t &) const
+{
+  throw std::runtime_error("radian to min position function should be implemented for each motor");
+}
+
+void MotorBase::radianToMinPosition(double, uint32_t &) const
+{
+  throw std::runtime_error("radian to min position function should be implemented for each motor");
+}
+
 Result MotorBase::getResult(int communication_result, uint8_t packet_error)
 {
   if (communication_result != COMM_SUCCESS) {
