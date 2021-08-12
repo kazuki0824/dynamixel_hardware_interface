@@ -193,6 +193,11 @@ public:
    */
   virtual Result updatePresentTemperature();
   /**
+   * @brief Execute min / max position limit command to the motor.
+   * @return Result 
+   */
+  virtual Result setPositionLimit();
+  /**
    * @brief Append state interface described in the URDF file.
    * @param interfaces List of state interface.
    */
@@ -234,6 +239,23 @@ protected:
   virtual void radianToMinPosition(double radian, uint8_t & value) const;
   virtual void radianToMinPosition(double radian, uint16_t & value) const;
   virtual void radianToMinPosition(double radian, uint32_t & value) const;
+  template <typename T>
+  T radianToMinPosition(double radian) const
+  {
+    T value;
+    radianToPosition(radian, value);
+    return value;
+  }
+  virtual void radianToMaxPosition(double radian, uint8_t & value) const;
+  virtual void radianToMaxPosition(double radian, uint16_t & value) const;
+  virtual void radianToMaxPosition(double radian, uint32_t & value) const;
+  template <typename T>
+  T radianToMaxPosition(double radian) const
+  {
+    T value;
+    radianToPosition(radian, value);
+    return value;
+  }
   std::shared_ptr<AddressTableBase> address_table_;
   std::shared_ptr<dynamixel::PortHandler> port_handler_;
   std::shared_ptr<dynamixel::PacketHandler> packet_handler_;
@@ -242,8 +264,11 @@ protected:
   double joint_velocity_;
   double goal_velocity_;
   double present_temperature_;
-  double min_position_limit_;
-  double max_position_limit_;
+  const double min_position_limit_;
+  const double max_position_limit_;
+private:
+  Result setMinPositionLimit();
+  Result setMaxPositionLimit();
 };
 }  //  namespace dynamixel_hardware_interface
 
