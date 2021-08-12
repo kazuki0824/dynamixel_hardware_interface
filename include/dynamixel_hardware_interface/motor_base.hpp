@@ -193,11 +193,6 @@ public:
    */
   virtual Result updatePresentTemperature();
   /**
-   * @brief Execute min / max position limit command to the motor.
-   * @return Result 
-   */
-  virtual Result setPositionLimit();
-  /**
    * @brief Append state interface described in the URDF file.
    * @param interfaces List of state interface.
    */
@@ -210,6 +205,11 @@ public:
     std::vector<hardware_interface::CommandInterface> & interfaces);
 
 protected:
+  /**
+   * @brief Execute min / max position limit command to the motor.
+   * @return Result 
+   */
+  virtual Result setPositionLimit();
   /**
    * @brief Construct a new Motor Base object
    */
@@ -266,6 +266,7 @@ protected:
   double present_temperature_;
   const double min_position_limit_;
   const double max_position_limit_;
+
 private:
   Result setMinPositionLimit();
   Result setMaxPositionLimit();

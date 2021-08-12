@@ -169,7 +169,14 @@ Result MotorBase::configure()
     goal_position_ = 0;
   }
   if (!enable_dummy) {
-    return torqueEnable(true);
+    const auto torque_enable_result = torqueEnable(true);
+    if (!torque_enable_result.success) {
+      return torque_enable_result;
+    }
+    const auto set_position_limit_result = setPositionLimit();
+    if (!set_position_limit_result.success) {
+      return set_position_limit_result;
+    }
   }
   return Result("", true);
 }
@@ -233,8 +240,9 @@ Result MotorBase::torqueEnable(bool enable)
 Result MotorBase::setMinPositionLimit()
 {
   const auto address = address_table_->getAddress(Operation::MIN_POSITION_LIMIT);
-  if(!address.exists()) {
-    return Result("MIN_POSITION_LIMIT operation does not support in " + toString(motor_type), false);
+  if (!address.exists()) {
+    return Result(
+      "MIN_POSITION_LIMIT operation does not support in " + toString(motor_type), false);
   }
   if (enable_dummy) {
     return Result("", true);
@@ -251,14 +259,14 @@ Result MotorBase::setMinPositionLimit()
     }
     if (address.byte_size == PacketByteSize::TWO_BYTE) {
       const auto result = packet_handler_->write2ByteTxRx(
-        port_handler_.get(), id, address.address, radianToMinPosition<uint16_t>(min_position_limit_),
-        &error);
+        port_handler_.get(), id, address.address,
+        radianToMinPosition<uint16_t>(min_position_limit_), &error);
       return getResult(result, error);
     }
     if (address.byte_size == PacketByteSize::FOUR_BYTE) {
       const auto result = packet_handler_->write4ByteTxRx(
-        port_handler_.get(), id, address.address, radianToMinPosition<uint32_t>(min_position_limit_),
-        &error);
+        port_handler_.get(), id, address.address,
+        radianToMinPosition<uint32_t>(min_position_limit_), &error);
       return getResult(result, error);
     }
     return Result("Invalid packet size", false);
@@ -268,8 +276,9 @@ Result MotorBase::setMinPositionLimit()
 Result MotorBase::setMaxPositionLimit()
 {
   const auto address = address_table_->getAddress(Operation::MAX_POSITION_LIMIT);
-  if(!address.exists()) {
-    return Result("MAX_POSITION_LIMIT operation does not support in " + toString(motor_type), false);
+  if (!address.exists()) {
+    return Result(
+      "MAX_POSITION_LIMIT operation does not support in " + toString(motor_type), false);
   }
   if (enable_dummy) {
     return Result("", true);
@@ -283,14 +292,14 @@ Result MotorBase::setMaxPositionLimit()
     }
     if (address.byte_size == PacketByteSize::TWO_BYTE) {
       const auto result = packet_handler_->write2ByteTxRx(
-        port_handler_.get(), id, address.address, radianToMaxPosition<uint16_t>(max_position_limit_),
-        &error);
+        port_handler_.get(), id, address.address,
+        radianToMaxPosition<uint16_t>(max_position_limit_), &error);
       return getResult(result, error);
     }
     if (address.byte_size == PacketByteSize::FOUR_BYTE) {
       const auto result = packet_handler_->write4ByteTxRx(
-        port_handler_.get(), id, address.address, radianToMaxPosition<uint32_t>(max_position_limit_),
-        &error);
+        port_handler_.get(), id, address.address,
+        radianToMaxPosition<uint32_t>(max_position_limit_), &error);
       return getResult(result, error);
     }
     return Result("Invalid packet size", false);
@@ -300,11 +309,11 @@ Result MotorBase::setMaxPositionLimit()
 Result MotorBase::setPositionLimit()
 {
   const auto min_result = setMaxPositionLimit();
-  if(!min_result.success) {
+  if (!min_result.success) {
     return min_result;
   }
   const auto max_result = setMaxPositionLimit();
-  if(!max_result.success) {
+  if (!max_result.success) {
     return max_result;
   }
   return Result("", true);
