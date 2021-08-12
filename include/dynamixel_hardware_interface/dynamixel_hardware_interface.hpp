@@ -98,6 +98,14 @@ private:
     }
   }
   void getParameter(
+    const std::string & key, const hardware_interface::ComponentInfo & info,
+    double & parameter) const
+  {
+    std::string param_string;
+    getParameter(key, info, param_string);
+    parameter = std::stod(param_string);
+  }
+  void getParameter(
     const std::string & key, const hardware_interface::ComponentInfo & info, int & parameter) const
   {
     std::string param_string;

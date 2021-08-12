@@ -106,8 +106,8 @@ public:
   template <typename AddressTable>
   MotorBase(
     const SupportedMotors & motor_type, const std::string & joint_name, const bool enable_dummy,
-    const AddressTable & table, int baudrate, uint8_t id,
-    std::shared_ptr<dynamixel::PortHandler> port_handler,
+    const AddressTable & table, int baudrate, uint8_t id, double min_position_limit,
+    double max_position_limit, std::shared_ptr<dynamixel::PortHandler> port_handler,
     std::shared_ptr<dynamixel::PacketHandler> packet_handler)
   : motor_type(motor_type),
     joint_name(joint_name),
@@ -117,7 +117,9 @@ public:
     port_handler_(port_handler),
     packet_handler_(packet_handler),
     joint_position_(std::numeric_limits<double>::quiet_NaN()),
-    goal_position_(std::numeric_limits<double>::quiet_NaN())
+    goal_position_(std::numeric_limits<double>::quiet_NaN()),
+    min_position_limit_(min_position_limit),
+    max_position_limit_(max_position_limit)
   {
     RCLCPP_INFO_STREAM(
       rclcpp::get_logger("dynamixel_hardware_interface"), "start constructing motor instance");
@@ -240,6 +242,8 @@ protected:
   double joint_velocity_;
   double goal_velocity_;
   double present_temperature_;
+  double min_position_limit_;
+  double max_position_limit_;
 };
 }  //  namespace dynamixel_hardware_interface
 
