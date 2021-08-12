@@ -42,9 +42,17 @@ class XW540_T260 : public AddressTableBase
 public:
   XW540_T260()
   : AddressTableBase(
-      Address(64, PacketByteSize::ONE_BYTE), Address(116, PacketByteSize::FOUR_BYTE), Address(),
-      Address(132, PacketByteSize::FOUR_BYTE), Address(128, PacketByteSize::FOUR_BYTE), Address(),
-      Address(), Address(146, PacketByteSize::ONE_BYTE))
+      // clang-format off
+      Address(64, PacketByteSize::ONE_BYTE),
+      Address(116, PacketByteSize::FOUR_BYTE),
+      Address(),
+      Address(132, PacketByteSize::FOUR_BYTE),
+      Address(128, PacketByteSize::FOUR_BYTE),
+      Address(),
+      Address(), Address(146, PacketByteSize::ONE_BYTE),
+      Address(52, PacketByteSize::FOUR_BYTE),
+      Address(48, PacketByteSize::FOUR_BYTE))
+  // clang-format on
   {
   }
 };
@@ -81,6 +89,11 @@ public:
   }
 
   double valueToTemperature(uint8_t value) const override { return static_cast<double>(value); }
+
+  void radianToMinPosition(double radian, uint32_t & value) const override
+  {
+    value = static_cast<uint32_t>(radian / (M_PI * 2) * 4096);
+  }
 };
 }  // namespace motors
 }  // namespace dynamixel_hardware_interface

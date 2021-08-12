@@ -65,11 +65,14 @@ public:
    * @param ADDR_PRESENT_LOAD If this value is boost::none, reading present_load command address exists.
    * @param ADDR_PRESENT_VOLTAGE If this value is boost::none, reading present_voltage command address exists.
    * @param ADDR_PRESENT_TEMPERATURE If this value is boost::none, reading present_temperature command address exists.
+   * @param ADDR_MIN_POSITION_LIMIT If this value is boost::none, setting min position limit command address exists.
+   * @param ADDR_MAX_POSITION_LIMIT If this value is boost::none, setting max position limit command address exists.
    */
   explicit AddressTableBase(
     Address ADDR_TORQUE_ENABLE, Address ADDR_GOAL_POSITION, Address ADDR_MOVING_SPEED,
     Address ADDR_PRESENT_POSITION, Address ADDR_PRESENT_SPEED, Address ADDR_PRESENT_LOAD,
-    Address ADDR_PRESENT_VOLTAGE, Address ADDR_PRESENT_TEMPERATURE)
+    Address ADDR_PRESENT_VOLTAGE, Address ADDR_PRESENT_TEMPERATURE, Address ADDR_MIN_POSITION_LIMIT,
+    Address ADDR_MAX_POSITION_LIMIT)
   : ADDR_TORQUE_ENABLE(ADDR_TORQUE_ENABLE),
     ADDR_GOAL_POSITION(ADDR_GOAL_POSITION),
     ADDR_MOVING_SPEED(ADDR_MOVING_SPEED),
@@ -77,7 +80,9 @@ public:
     ADDR_PRESENT_SPEED(ADDR_PRESENT_SPEED),
     ADDR_PRESENT_LOAD(ADDR_PRESENT_LOAD),
     ADDR_PRESENT_VOLTAGE(ADDR_PRESENT_VOLTAGE),
-    ADDR_PRESENT_TEMPERATURE(ADDR_PRESENT_TEMPERATURE)
+    ADDR_PRESENT_TEMPERATURE(ADDR_PRESENT_TEMPERATURE),
+    ADDR_MIN_POSITION_LIMIT(ADDR_MIN_POSITION_LIMIT),
+    ADDR_MAX_POSITION_LIMIT(ADDR_MAX_POSITION_LIMIT)
   {
   }
   /**
