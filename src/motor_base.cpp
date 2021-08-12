@@ -277,19 +277,19 @@ Result MotorBase::setMaxPositionLimit()
     uint8_t error = 0;
     if (address.byte_size == PacketByteSize::ONE_BYTE) {
       const auto result = packet_handler_->write1ByteTxRx(
-        port_handler_.get(), id, address.address, radianToMinPosition<uint8_t>(max_position_limit_),
+        port_handler_.get(), id, address.address, radianToMaxPosition<uint8_t>(max_position_limit_),
         &error);
       return getResult(result, error);
     }
     if (address.byte_size == PacketByteSize::TWO_BYTE) {
       const auto result = packet_handler_->write2ByteTxRx(
-        port_handler_.get(), id, address.address, radianToMinPosition<uint16_t>(max_position_limit_),
+        port_handler_.get(), id, address.address, radianToMaxPosition<uint16_t>(max_position_limit_),
         &error);
       return getResult(result, error);
     }
     if (address.byte_size == PacketByteSize::FOUR_BYTE) {
       const auto result = packet_handler_->write4ByteTxRx(
-        port_handler_.get(), id, address.address, radianToMinPosition<uint32_t>(max_position_limit_),
+        port_handler_.get(), id, address.address, radianToMaxPosition<uint32_t>(max_position_limit_),
         &error);
       return getResult(result, error);
     }
